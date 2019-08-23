@@ -1,0 +1,12 @@
+.tab {
+    border: 1px solid RGBA(75, 128, 247, 1);
+}
+
+.active {
+    background: RGBA(75, 128, 247, 1);
+    color: white;
+}
+
+.completed {
+    text-decoration: line-through;
+}

@@ -1,0 +1,7 @@
+{
+  "name": "examenApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
