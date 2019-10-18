@@ -19,10 +19,10 @@
   },
   "servers": [
     {
-      "url": "https://petstore.swagger.io/v1"
+      "url": "https://us-central1-dooloop-f19f1.cloudfunctions.net"
     },
     {
-      "url": "http://petstore.swagger.io/v1"
+      "url": "http://us-central1-dooloop-f19f1.cloudfunctions.net"
     }
   ],
   "tags": [
