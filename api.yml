@@ -1,0 +1,391 @@
+openapi: 3.0.1
+info:
+  title: Spyc AR API
+  description: Monadic ARQ project documentation
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@monadic.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 2.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+servers:
+  - url: 'https://7lp0pryt60.execute-api.us-east-1.amazonaws.com/dev'
+  - url: 'http://localhost:5000/arq-dev/us-central1'
+paths:
+  '/auth/signup':
+    post:
+      security: []
+      tags:
+        - Auth
+      summary: Signup
+      description: Signup
+      operationId: signup
+      requestBody:
+        description: Sign up the user and get the token
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Signup'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+          content: {}
+      x-codegen-request-body-name: body
+  '/auth/login':
+    post:
+      security: []
+      tags:
+        - Auth
+      summary: Login
+      description: Login
+      operationId: login
+      requestBody:
+        description: Login the user and get the token
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '201':
+          description: Success login
+      x-codegen-request-body-name: body
+  '/auth/refresh/token':
+    post:
+      tags:
+        - Auth
+      summary: Refresh token
+      description: Refresh token
+      operationId: refreshToken
+      requestBody:
+        description: Refresh token the user and get new token
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshToken'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '201':
+          description: Success refresh token
+      x-codegen-request-body-name: body
+  '/auth/forgot/password':
+    post:
+      tags:
+        - Auth
+      summary: Forgot password
+      description: Forgot password
+      operationId: forgotPassword
+      requestBody:
+        description: Sent code for recovery pasword
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPassword'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '201':
+          description: Success sent code
+      x-codegen-request-body-name: body
+  '/auth/forgot/password/confirm':
+    post:
+      tags:
+        - Auth
+      summary: Forgot password confirm
+      description: Forgot password confirm
+      operationId: forgotPasswordConfirm
+      requestBody:
+        description: Forgot password confirm
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPassword'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '201':
+          description: Success forgot password confirm
+      x-codegen-request-body-name: body
+  '/auth/change/password/':
+    post:
+      tags:
+        - Auth
+      summary: Change password user
+      description: Change password user
+      operationId: changePasswordUser
+      requestBody:
+        description: Change password user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '201':
+          description: Success change password
+      x-codegen-request-body-name: body
+  '/auth/resend/confirm/code/':
+    post:
+      tags:
+        - Auth
+      summary: Resend confirm code
+      description: Resend Confirm Code
+      operationId: resendConfirmCode
+      requestBody:
+        description: Resend code password confirm
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resendConfirmCode'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '201':
+          description: Success resend code
+      x-codegen-request-body-name: body
+  # CREATION
+  '/creation':
+    get:
+      tags:
+        - Creation
+      summary: Show all creations
+      description: Show all creations
+      operationId: creation
+      security:
+        - AccessToken: []
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success show creations
+      x-codegen-request-body-name: body
+  '/creation/upload/video':
+    post:
+      servers:
+        - url: https://cryptic-eyrie-32793.herokuapp.com
+      tags:
+        - Creation
+      summary: Upload video preview
+      description: Upload video preview to S3
+      operationId: creationUploadVideo
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreationUploadVideo'
+      responses:
+        '405':
+          description: Invalid input
+        '400':
+          description: Error upload video into bucket S3
+        '200':
+          description: Success show creations
+  # PROFILE
+  '/profile/user':
+    get:
+      tags:
+        - Profile
+      summary: Get profile info user
+      description: Get profile infor user by access token
+      operationId: profileUser
+      security:
+        - AccessToken: []
+      responses:
+        '405':
+          description: Invalid access token or tokenId
+        '200':
+          description: Success show profile
+      x-codegen-request-body-name: body
+  # DEVICE
+  '/device/token':
+    post:
+      tags:
+        - Device
+      summary: Store device token
+      description: Store device token
+      operationId: deviceToken
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreDeviceToken'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '201':
+          description: Success store token
+      x-codegen-request-body-name: body
+  # COMMENT
+  '/comments':
+    get:
+      tags:
+        - Comments
+      summary: Get all comments
+      description: Get all comments
+      operationId: comment
+      security:
+        - AccessToken: []
+      responses:
+        '405':
+          description: Invalid access token or tokenId
+        '200':
+          description: Success show comments
+      x-codegen-request-body-name: body
+    post:
+      tags:
+        - Comments
+      summary: Store comment
+      description: Store comment
+      operationId: commentStore
+      security:
+        - AccessToken: []
+      responses:
+        '405':
+          description: Invalid access token or tokenId
+        '201':
+          description: Success created comment
+      x-codegen-request-body-name: body
+  '/comments/child':
+    post:
+      tags:
+        - Comments
+      summary: Store child comment
+      description: Store child comment
+      operationId: commentChildStore
+      security:
+        - AccessToken: []
+      responses:
+        '405':
+          description: Invalid access token or tokenId
+        '201':
+          description: Success created child comment
+      x-codegen-request-body-name: body
+  # USER
+  '/user':
+    delete:
+      tags:
+        - User
+      summary: Delete user
+      description: Delete user
+      operationId: deleteUser
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteUser'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '201':
+          description: Success delete user
+      x-codegen-request-body-name: body
+    # COMMENT
+components:
+  schemas:
+    # Signup Schema
+    Signup:
+      type: object
+      properties:
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+    # End Signup Schema
+    # Login Schema
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    # End Login Schema
+    # Refresh token Schema
+    RefreshToken:
+      type: object
+      properties:
+        username:
+          type: string
+        refreshToken:
+          type: string
+    # End Refresh token Schema
+    # ForgotPassword Schema
+    ForgotPassword:
+      type: object
+      properties:
+        username:
+          type: string
+    # End ForgotPassword Schema
+    # ForgotPassword Schema
+    ChangePassword:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        newPassword:
+          type: string
+    # End ForgotPassword Schema
+    # resendCode Schema
+    resendConfirmCode:
+      type: object
+      properties:
+        email:
+          type: string
+    # End resendCode Schema
+    # CreationUploadVideo Schema
+    CreationUploadVideo:
+      type: object
+      properties:
+        creationId:
+          type: string
+        video:
+          type: string
+          format: binary
+    # End CreationUploadVideo Schema
+    # StoreDeviceToken Schema
+    StoreDeviceToken:
+      type: object
+      properties:
+        token:
+          type: string
+    # End StoreDeviceToken Schema
+    # DeleteUser Schema
+    DeleteUser:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    # End DeleteUser Schema
+  securitySchemes:
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Authorization
