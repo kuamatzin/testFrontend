@@ -212,6 +212,29 @@ paths:
         '200':
           description: Success show profile
       x-codegen-request-body-name: body
+  '/profile/upload/photo':
+    post:
+      servers:
+        - url: https://cryptic-eyrie-32793.herokuapp.com
+      tags:
+        - Profile
+      summary: Upload photo profile
+      description: Upload photo profile to S3
+      operationId: profileUploadPhoto
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProfileUploadPhoto'
+      responses:
+        '405':
+          description: Invalid input
+        '400':
+          description: Error upload photo into bucket S3
+        '200':
+          description: Success upload photo
   # DEVICE
   '/device/token':
     post:
@@ -301,7 +324,6 @@ paths:
         '201':
           description: Success delete user
       x-codegen-request-body-name: body
-    # COMMENT
 components:
   schemas:
     # Signup Schema
@@ -313,6 +335,12 @@ components:
         username:
           type: string
         password:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        gender:
           type: string
     # End Signup Schema
     # Login Schema
@@ -368,6 +396,14 @@ components:
           type: string
           format: binary
     # End CreationUploadVideo Schema
+    # ProfileUploadPhoto Schema
+    ProfileUploadPhoto:
+      type: object
+      properties:
+        photo:
+          type: string
+          format: binary
+    # End ProfileUploadPhoto Schema
     # StoreDeviceToken Schema
     StoreDeviceToken:
       type: object
