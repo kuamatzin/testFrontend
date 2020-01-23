@@ -173,6 +173,26 @@ paths:
         '200':
           description: Success show creations
       x-codegen-request-body-name: body
+    post:
+      tags:
+        - Creation
+      summary: Create creations
+      description: Creatation creations
+      operationId: creationStore
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCreation'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success show creations
+      x-codegen-request-body-name: body
   '/creation/upload/video':
     post:
       servers:
@@ -396,6 +416,13 @@ components:
           type: string
           format: binary
     # End CreationUploadVideo Schema
+    # DeleteUser Schema
+    CreateCreation:
+      type: object
+      properties:
+        data:
+          type: string
+    # End DeleteUser Schema
     # ProfileUploadPhoto Schema
     ProfileUploadPhoto:
       type: object
