@@ -46,7 +46,15 @@ paths:
           description: Invalid input
           content: {}
       x-codegen-request-body-name: body
+  '/eshop/webpage/{menuId}':
     put:
+      parameters:
+        - in: path
+          name: menuId
+          schema:
+            type: string
+          required: true
+          description: Numeric ID of the menu to update
       security: []
       tags:
         - Menu
@@ -54,7 +62,7 @@ paths:
       description: Update the menu
       operationId: updateMenu
       requestBody:
-        description: Store the menu
+        description: Update the menu
         content:
           application/json:
             schema:
@@ -72,6 +80,13 @@ paths:
       summary: Delete the menu
       description: Delete the menu
       operationId: deleteeMenu
+      parameters:
+        - in: path
+          name: menuId
+          schema:
+            type: string
+          required: true
+          description: Numeric ID of the menu to delete
       responses:
         '405':
           description: Invalid input
@@ -84,6 +99,8 @@ components:
     Menu:
       type: object
       properties:
+        name:
+          type: string
         menu:
           type: array
           items:
@@ -111,6 +128,7 @@ components:
                     type:
                       type: string
       example:   # Object-level example
+        name: "Menu Principal"
         menu: [
           {
                 "name": "Niños",
