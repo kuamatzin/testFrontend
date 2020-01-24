@@ -1,0 +1,157 @@
+openapi: 3.0.1
+info:
+  title: Monadic API
+  description: Monadic project documentation
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@monadic.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 2.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+servers:
+  - url: 'https://monadicapi.herokuapp.com/api'
+paths:
+  '/eshop/webpage':
+    get:
+      tags:
+        - Menu
+      summary: Show the menu
+      description: Show the menu
+      operationId: menu
+      security: []
+      responses:
+        '200':
+          description: Success show creations
+      x-codegen-request-body-name: body
+    post:
+      security: []
+      tags:
+        - Menu
+      summary: Store the menu
+      description: Store the menu
+      operationId: storeMenu
+      requestBody:
+        description: Store the menu
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Menu'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+          content: {}
+      x-codegen-request-body-name: body
+    put:
+      security: []
+      tags:
+        - Menu
+      summary: Update the menu
+      description: Update the menu
+      operationId: updateMenu
+      requestBody:
+        description: Store the menu
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Menu'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+          content: {}
+      x-codegen-request-body-name: body
+    delete:
+      security: []
+      tags:
+        - Menu
+      summary: Delete the menu
+      description: Delete the menu
+      operationId: deleteeMenu
+      responses:
+        '405':
+          description: Invalid input
+          content: {}
+      x-codegen-request-body-name: body
+      
+    
+components:
+  schemas:
+    Menu:
+      type: object
+      properties:
+        menu:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              url:
+                type: string
+              image:
+                type: string
+              type:
+                type: string
+              children:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    url:
+                      type: string
+                    image:
+                      type: string
+                    type:
+                      type: string
+      example:   # Object-level example
+        menu: [
+          {
+                "name": "Niños",
+                "url": "http://mitienda.com/niños",
+                "image": "",
+                "type": "Categoria",
+                "children": [
+                    {
+                        "name": "Niñas",
+                        "url": "http://mitienda.com/niñas",
+                        "image": "",
+                        "type": "Categoria",
+                        "children": [
+                            {
+                                "name": "Zara",
+                                "url": "http://mitienda.com/zara",
+                                "image": "http://mitienda.com/imagenDeLogoDeZara.png",
+                                "type": "URL",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Mujer",
+                        "url": "http://mitienda.com/mujer",
+                        "image": "",
+                        "type": "Categoria",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "name": "Niñas",
+                "url": "http://mitienda.com/niñas",
+                "image": "",
+                "type": "Categoria",
+                "children": []
+            }
+        ]
+  securitySchemes:
+    AccessToken:
+      type: apiKey
+      in: header
+      name: Authorization
