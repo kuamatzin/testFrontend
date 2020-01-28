@@ -19,8 +19,8 @@ paths:
     get:
       tags:
         - Menu
-      summary: Show the menu
-      description: Show the menu
+      summary: Show the menus
+      description: Show the menus
       operationId: menu
       security: []
       responses:
@@ -47,6 +47,24 @@ paths:
           content: {}
       x-codegen-request-body-name: body
   '/eshop/menu/{menuId}':
+    get:
+      parameters:
+        - in: path
+          name: menuId
+          schema:
+            type: string
+          required: true
+          description: Numeric ID of the menu to update
+      tags:
+        - Menu
+      summary: Get the menu by id
+      description: Show the menu
+      operationId: getmenu
+      security: []
+      responses:
+        '200':
+          description: Success show menu
+      x-codegen-request-body-name: body
     post:
       parameters:
         - in: path
