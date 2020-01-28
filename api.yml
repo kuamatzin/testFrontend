@@ -217,7 +217,7 @@ paths:
         '200':
           description: Success show creations
       x-codegen-request-body-name: body
-  '/creation/{creationId}/upload/file/content/{messageId}':
+  '/creation/{creationId}/upload/file/content/{contentId}':
     post:
       servers:
         - url: https://cryptic-eyrie-32793.herokuapp.com
@@ -235,7 +235,7 @@ paths:
             type: string
           required: true
         - in: path
-          name: messageId
+          name: contentId
           schema:
             type: string
           required: true
