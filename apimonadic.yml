@@ -15,7 +15,7 @@ externalDocs:
 servers:
   - url: 'https://monadicapi.herokuapp.com/api'
 paths:
-  '/eshop/webpage':
+  '/eshop/menu':
     get:
       tags:
         - Menu
@@ -46,8 +46,8 @@ paths:
           description: Invalid input
           content: {}
       x-codegen-request-body-name: body
-  '/eshop/webpage/{menuId}':
-    put:
+  '/eshop/menu/{menuId}':
+    post:
       parameters:
         - in: path
           name: menuId
