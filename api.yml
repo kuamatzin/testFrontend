@@ -216,6 +216,45 @@ paths:
           description: Error upload video into bucket S3
         '200':
           description: Success show creations
+      x-codegen-request-body-name: body
+  '/creation/{creationId}/upload/file/content/{messageId}':
+    post:
+      servers:
+        - url: https://cryptic-eyrie-32793.herokuapp.com
+      tags:
+        - Creation
+      summary: Upload file content
+      description: Upload file content to S3
+      operationId: creationUploadFileContent
+      security:
+        - AccessToken: []
+      parameters:
+        - in: path
+          name: creationId
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: messageId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '405':
+          description: Invalid input
+        '400':
+          description: Error upload file content into bucket S3
+        '200':
+          description: Success upload file content creation
   # PROFILE
   '/profile/user':
     get:
