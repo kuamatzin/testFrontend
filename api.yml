@@ -511,12 +511,6 @@ components:
           type: string
         password:
           type: string
-        firstname:
-          type: string
-        lastname:
-          type: string
-        gender:
-          type: string
     # End Signup Schema
     # Login Schema
     Login:
