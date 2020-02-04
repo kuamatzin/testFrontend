@@ -217,7 +217,7 @@ paths:
         '200':
           description: Success show creations
       x-codegen-request-body-name: body
-  '/creation/{creationId}/upload/file/content/{contentId}':
+  '/creation/{creationId}/upload/file/content/{messageId}':
     post:
       servers:
         - url: https://cryptic-eyrie-32793.herokuapp.com
@@ -235,7 +235,7 @@ paths:
             type: string
           required: true
         - in: path
-          name: contentId
+          name: messageId
           schema:
             type: string
           required: true
@@ -332,6 +332,27 @@ paths:
         '200':
           description: Success show comments
       x-codegen-request-body-name: body
+  '/comments/{creationId}':
+    get:
+      tags:
+        - Comments
+      summary: Get creation comments
+      description: Get cretion comments
+      operationId: getCreationComments
+      security:
+        - AccessToken: []
+      parameters:
+        - in: path
+          name: creationId
+          schema:
+            type: string
+          required: true
+      responses:
+        '405':
+          description: Invalid access token or tokenId
+        '200':
+          description: Success show comments
+      x-codegen-request-body-name: body
     post:
       tags:
         - Comments
@@ -340,13 +361,58 @@ paths:
       operationId: commentStore
       security:
         - AccessToken: []
+      parameters:
+        - in: path
+          name: creationId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+        required: true
       responses:
         '405':
           description: Invalid access token or tokenId
         '201':
-          description: Success created comment
+          description: Success created child comment
       x-codegen-request-body-name: body
-  '/comments/child':
+  '/comments/{commentId}':
+    put:
+      tags:
+        - Comments
+      summary: Update comment
+      description: Update comment
+      operationId: commentUpdate
+      security:
+        - AccessToken: []
+      parameters:
+        - in: path
+          name: commentId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+        required: true
+      responses:
+        '405':
+          description: Invalid access token or tokenId
+        '201':
+          description: Success created child comment
+      x-codegen-request-body-name: body
+  '/comments/{commentId}/child':
     post:
       tags:
         - Comments
@@ -355,11 +421,61 @@ paths:
       operationId: commentChildStore
       security:
         - AccessToken: []
+      parameters:
+        - in: path
+          name: commentId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+        required: true
       responses:
         '405':
           description: Invalid access token or tokenId
         '201':
           description: Success created child comment
+      x-codegen-request-body-name: body
+  '/{commentId}/child/{commentChildId}':
+    put:
+      tags:
+        - Comments
+      summary: Update child comment
+      description: Update child comment
+      operationId: commentChildUpdate
+      security:
+        - AccessToken: []
+      parameters:
+        - in: path
+          name: commentId
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: commentChildId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+        required: true
+      responses:
+        '405':
+          description: Invalid access token or tokenId
+        '201':
+          description: Success Update child comment
       x-codegen-request-body-name: body
   # USER
   '/user':
