@@ -14,7 +14,7 @@ externalDocs:
   url: 'http://swagger.io'
 servers:
   - url: 'https://7lp0pryt60.execute-api.us-east-1.amazonaws.com/dev'
-  - url: 'http://localhost:5000/arq-dev/us-central1'
+  - url: 'http://localhost:5000'
 paths:
   '/auth/signup':
     post:
@@ -24,6 +24,26 @@ paths:
       summary: Signup
       description: Signup
       operationId: signup
+      requestBody:
+        description: Sign up the user and get the token
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Signup'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+          content: {}
+      x-codegen-request-body-name: body
+  '/auth/signup/v2':
+    post:
+      security: []
+      tags:
+        - Auth
+      summary: Signup validate email with code
+      description: Signup validate email with code
+      operationId: signupV2
       requestBody:
         description: Sign up the user and get the token
         content:
