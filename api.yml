@@ -41,8 +41,8 @@ paths:
       security: []
       tags:
         - Auth
-      summary: Signup validate email with code
-      description: Signup validate email with code
+      summary: Signup validate email auto verified user and email
+      description: Signup validate email auto verified user and email
       operationId: signupV2
       requestBody:
         description: Sign up the user and get the token
@@ -129,7 +129,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ForgotPassword'
+              $ref: '#/components/schemas/ForgotPasswordConfirm'
         required: true
       responses:
         '405':
@@ -144,6 +144,8 @@ paths:
       summary: Change password user
       description: Change password user
       operationId: changePasswordUser
+      security:
+        - AccessToken: []
       requestBody:
         description: Change password user
         content:
@@ -545,7 +547,7 @@ components:
     RefreshToken:
       type: object
       properties:
-        username:
+        email:
           type: string
         refreshToken:
           type: string
@@ -554,15 +556,24 @@ components:
     ForgotPassword:
       type: object
       properties:
-        username:
+        email:
           type: string
     # End ForgotPassword Schema
+     # ForgotPasswordConfirm Schema
+    ForgotPasswordConfirm:
+      type: object
+      properties:
+        email:
+          type: string
+        verificationCode:
+          type: string
+        newPassword:
+          type: string
+    # End ForgotPasswordConfirm Schema
     # ForgotPassword Schema
     ChangePassword:
       type: object
       properties:
-        username:
-          type: string
         password:
           type: string
         newPassword:
