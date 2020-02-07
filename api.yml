@@ -599,9 +599,78 @@ components:
     # DeleteUser Schema
     CreateCreation:
       type: object
-      properties:
-        data:
-          type: string
+      example:   # Object-level example
+          {
+        "TITLE": "VideoPreview",
+        "USER_NAME": "Gandhi menas",
+        "USER_IMAGE": "http://lorempixel.com/400/400/people/75",
+        "USER_ID": "abc",
+        "AUTHORIZED": [
+          "sdf"
+        ],
+        "SEEN": 0,
+        "LOCATION_TYPE": "confirmLocation",
+        "DISTANCE": 0,
+        "LOCATION": {
+          "LATITUDE": 0,
+          "LONGITUDE": 0
+        },
+        "LOCATION_SELECTED": "MY_LOCATION",
+        "VISIBILITY_RANGE": "1000",
+        "DATE_TIME": "21 Jan 2020 at 16:43:40",
+        "TEXT_ADDRESS": "14–20 Aston Quay Temple Bar District Dublin Co. Dublin Dublin 2",
+        "VIDEO_PREVIEW": {
+          "MIMETYPE": "video/mp4",
+          "LOCATION": "https://test-video-preview.s3.amazonaws.com/c042d552-298e-49c4-9946-d724e0183231.mp4",
+          "SIZE": 38701154
+        },
+        "COMMENTS": 0,
+        "PRIVACY_TYPE": "PUBLIC",
+        "CONTENT": [
+          {
+            "SHIFT": {
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "COLOR": {
+              "a": 0,
+              "b": 0,
+              "r": 0,
+              "g": 0
+            },
+            "MESSAGE_TYPE_ID": "1_laugh",
+            "MESSAGE_TYPE": "message",
+            "SPATIAL_LOCATION_RELATIVE": {
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "SPATIAL_ORIENTATION": {
+              "X": 0,
+              "Y": 0,
+              "Z": 0,
+              "W": 0
+            },
+            "TEXT": "textDefault",
+            "SPATIAL_LOCATION": {
+              "LATITUDE": 0,
+              "LONGITUDE": 0
+            },
+            "TEXT_FONT": "gfdsgbfvd",
+            "DISTANCE_SHIFT": 0,
+            "FRAME": {
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "URL": "https://"
+          }
+        ],
+        "AUTHORIZATION": "YES",
+        "LIKES": 1,
+        "VIEWS": 0
+      }
     # End DeleteUser Schema
     # ProfileUploadPhoto Schema
     ProfileUploadPhoto:
