@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Spyc AR API
-  description: Monadic ARQ project documentation
+  description: Spyc AR ARQ project documentation
   termsOfService: 'http://swagger.io/terms/'
   contact:
     email: apiteam@monadic.com
@@ -684,7 +684,13 @@ components:
     StoreDeviceToken:
       type: object
       properties:
-        token:
+        deviceToken:
+          type: string
+        os:
+          type: string
+        version:
+          type: string
+        status:
           type: string
     # End StoreDeviceToken Schema
     # DeleteUser Schema
