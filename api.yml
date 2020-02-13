@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Spyc AR API
-  description: Spyc ARQ project documentation
+  description: Monadic ARQ project documentation
   termsOfService: 'http://swagger.io/terms/'
   contact:
     email: apiteam@monadic.com
@@ -599,6 +599,71 @@ paths:
           schema:
             type: string
           description: name or full name
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+  # FOLLOW
+  '/follow':
+    get:
+      tags:
+        - Followers
+      summary: Get follower list by sub
+      description: Get follower list by sub
+      operationId: getFollowList
+      security:
+        - AccessToken: []
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+    post:
+      tags:
+        - Followers
+      summary: Create follow user
+      description: Create follow user
+      operationId: storeFollowUser
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                followId:
+                  type: string
+                  description: Sub id
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+  '/follow/{id}/status':
+    put:
+      tags:
+        - Followers
+      summary: Change status follow
+      description: Change status follow
+      operationId: updateStatusFollowUser
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: in:blocked,removed,allowed
+        required: true
       responses:
         '405':
           description: Invalid input
