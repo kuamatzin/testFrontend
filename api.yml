@@ -24,6 +24,7 @@ paths:
       summary: Signup
       description: Signup
       operationId: signup
+      deprecated: true
       requestBody:
         description: Sign up the user and get the token
         content:
@@ -53,16 +54,15 @@ paths:
         required: true
       responses:
         '200':
-          description: User signed in
+          description: OK
         '400':
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SignupResponse'
+          description: Bad request. User ID must be an integer and larger than 0.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: A user with the specified ID was not found.
         '5XX':
           description: Unexpected error.
-                    
       x-codegen-request-body-name: body
   '/auth/login':
     post:
@@ -301,6 +301,26 @@ paths:
         '200':
           description: Success show profile
       x-codegen-request-body-name: body
+  '/profile':
+    put:
+      tags:
+        - Profile
+      summary: Updated data user
+      description: Updated data profile
+      operationId: updatedProfileUser
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfile'
+      responses:
+        '405':
+          description: Invalid access token or tokenId
+        '200':
+          description: Success show profile
+      x-codegen-request-body-name: body
   '/profile/upload/photo':
     post:
       servers:
@@ -529,6 +549,134 @@ paths:
         '201':
           description: Success delete user
       x-codegen-request-body-name: body
+  '/user/search/email':
+    get:
+      tags:
+        - User
+      summary: Search user by email
+      description: Search user by email
+      operationId: searchUserEmail
+      security:
+        - AccessToken: []
+      parameters:
+        - in: query
+          name: email
+          schema:
+            type: string
+          description: Send email valid
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+  '/user/search/username':
+    get:
+      tags:
+        - User
+      summary: Search user by username
+      description: Search user by username
+      operationId: searchUserUsername
+      security:
+        - AccessToken: []
+      parameters:
+        - in: query
+          name: username
+          schema:
+            type: string
+          description: Username/Nickname
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+  '/user/search/name':
+    get:
+      tags:
+        - User
+      summary: Search user by name/fullname
+      description: Search user by name
+      operationId: searchUserName
+      security:
+        - AccessToken: []
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: name or full name
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+  # FOLLOW
+  '/follow':
+    get:
+      tags:
+        - Followers
+      summary: Get follower list by sub
+      description: Get follower list by sub
+      operationId: getFollowList
+      security:
+        - AccessToken: []
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+    post:
+      tags:
+        - Followers
+      summary: Create follow user
+      description: Create follow user
+      operationId: storeFollowUser
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                followId:
+                  type: string
+                  description: Sub id
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+  '/follow/:id/status':
+    put:
+      tags:
+        - Followers
+      summary: Change status follow
+      description: Change status follow
+      operationId: updateStatusFollowUser
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: in:blocked,removed,allowed
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
 components:
   schemas:
     # Signup Schema
@@ -566,8 +714,8 @@ components:
       properties:
         email:
           type: string
-    # End ForgotPassword Schema
-     # ForgotPasswordConfirm Schema
+      # End ForgotPassword Schema
+      # ForgotPasswordConfirm Schema
     ForgotPasswordConfirm:
       type: object
       properties:
@@ -608,33 +756,33 @@ components:
     CreateCreation:
       type: object
       example:   # Object-level example
-          {
-        "TITLE": "VideoPreview",
-        "USER_NAME": "Gandhi menas",
-        "USER_IMAGE": "http://lorempixel.com/400/400/people/75",
-        "USER_ID": "abc",
-        "AUTHORIZED": [
-          "sdf"
-        ],
-        "SEEN": 0,
-        "LOCATION_TYPE": "confirmLocation",
-        "DISTANCE": 0,
-        "LOCATION": {
-          "LATITUDE": 0,
-          "LONGITUDE": 0
-        },
-        "LOCATION_SELECTED": "MY_LOCATION",
-        "VISIBILITY_RANGE": "1000",
-        "DATE_TIME": "21 Jan 2020 at 16:43:40",
-        "TEXT_ADDRESS": "14–20 Aston Quay Temple Bar District Dublin Co. Dublin Dublin 2",
-        "VIDEO_PREVIEW": {
-          "MIMETYPE": "video/mp4",
-          "LOCATION": "https://test-video-preview.s3.amazonaws.com/c042d552-298e-49c4-9946-d724e0183231.mp4",
-          "SIZE": 38701154
-        },
-        "COMMENTS": 0,
-        "PRIVACY_TYPE": "PUBLIC",
-        "CONTENT": [
+        {
+          "TITLE": "VideoPreview",
+          "USER_NAME": "Gandhi menas",
+          "USER_IMAGE": "http://lorempixel.com/400/400/people/75",
+          "USER_ID": "abc",
+          "AUTHORIZED": [
+            "sdf"
+          ],
+          "SEEN": 0,
+          "LOCATION_TYPE": "confirmLocation",
+          "DISTANCE": 0,
+          "LOCATION": {
+            "LATITUDE": 0,
+            "LONGITUDE": 0
+          },
+          "LOCATION_SELECTED": "MY_LOCATION",
+          "VISIBILITY_RANGE": "1000",
+          "DATE_TIME": "21 Jan 2020 at 16:43:40",
+          "TEXT_ADDRESS": "14–20 Aston Quay Temple Bar District Dublin Co. Dublin Dublin 2",
+          "VIDEO_PREVIEW": {
+            "MIMETYPE": "video/mp4",
+            "LOCATION": "https://test-video-preview.s3.amazonaws.com/c042d552-298e-49c4-9946-d724e0183231.mp4",
+            "SIZE": 38701154
+          },
+          "COMMENTS": 0,
+          "PRIVACY_TYPE": "PUBLIC",
+          "CONTENT": [
           {
             "SHIFT": {
               "X": 0,
@@ -674,37 +822,12 @@ components:
             },
             "URL": "https://"
           }
-        ],
-        "AUTHORIZATION": "YES",
-        "LIKES": 1,
-        "VIEWS": 0
-      }
+          ],
+          "AUTHORIZATION": "YES",
+          "LIKES": 1,
+          "VIEWS": 0
+        }
     # End DeleteUser Schema
-    SignupResponse:
-      type: array
-      example:
-        [
-          {
-            "code": 0,
-            "status": "ERROR_INPUT",
-            "description": "Bad validation body request"
-          },
-          {
-            "code": 1,
-            "status": "ERROR_SIGNUP_USER",
-            "description": "Email already exists in DB"
-          },
-          {
-            "code": 2,
-            "status": "USER_NOT_CREATED_IN_DYNAMO",
-            "description": "User could not be saved"
-          },
-          {
-            "code": 3,
-            "status": "UNABLE_TO_LOGIN",
-            "description": "User created but unable to login"
-          }
-        ]
     # ProfileUploadPhoto Schema
     ProfileUploadPhoto:
       type: object
@@ -713,11 +836,34 @@ components:
           type: string
           format: binary
     # End ProfileUploadPhoto Schema
+    # UpdateProfile Schema
+    UpdateProfile:
+      type: object
+      properties:
+        firstname:
+          type: string
+        lastname:
+          type: string
+        username:
+          type: string
+        birthdate:
+          type: string
+        phoneNumber:
+          type: string
+        gender:
+          type: string
+    # End UpdateProfile Schema
     # StoreDeviceToken Schema
     StoreDeviceToken:
       type: object
       properties:
-        token:
+        deviceToken:
+          type: string
+        os:
+          type: string
+        version:
+          type: string
+        status:
           type: string
     # End StoreDeviceToken Schema
     # DeleteUser Schema
