@@ -53,9 +53,14 @@ paths:
               $ref: '#/components/schemas/Signup'
         required: true
       responses:
-        '405':
-          description: Invalid input
-          content: {}
+        '200':
+          description: User signed in
+        '400':
+          description: Error body
+          content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupResponse'
       x-codegen-request-body-name: body
   '/auth/login':
     post:
@@ -927,6 +932,31 @@ components:
         password:
           type: string
     # End DeleteUser Schema
+    SignupResponse:
+      type: array
+      example:
+        [
+          {
+            "code": 0,
+            "status": "ERROR_INPUT",
+            "description": "Bad validation body request"
+          },
+          {
+            "code": 1,
+            "status": "ERROR_SIGNUP_USER",
+            "description": "Email already exists in DB"
+          },
+          {
+            "code": 2,
+            "status": "USER_NOT_CREATED_IN_DYNAMO",
+            "description": "User could not be saved"
+          },
+          {
+            "code": 3,
+            "status": "UNABLE_TO_LOGIN",
+            "description": "User created but unable to login"
+          }
+        ]
   securitySchemes:
     AccessToken:
       type: apiKey
