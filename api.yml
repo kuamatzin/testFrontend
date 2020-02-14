@@ -53,16 +53,9 @@ paths:
               $ref: '#/components/schemas/Signup'
         required: true
       responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad request. User ID must be an integer and larger than 0.
-        '401':
-          description: Authorization information is missing or invalid.
-        '404':
-          description: A user with the specified ID was not found.
-        '5XX':
-          description: Unexpected error.
+        '405':
+          description: Invalid input
+          content: {}
       x-codegen-request-body-name: body
   '/auth/login':
     post:
@@ -285,6 +278,28 @@ paths:
           description: Error upload file content into bucket S3
         '200':
           description: Success upload file content creation
+  ### CREATION V2 ######################
+  '/creation/v2/':
+    post:
+      tags:
+        - Creation
+      summary: Create creations
+      description: Creatation creations
+      operationId: creationStoreV2
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCreationV2'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success show creations
+      x-codegen-request-body-name: body
   # PROFILE
   '/profile/user':
     get:
@@ -652,7 +667,7 @@ paths:
         '200':
           description: Success
       x-codegen-request-body-name: body
-  '/follow/:id/status':
+  '/follow/{id}/status':
     put:
       tags:
         - Followers
@@ -661,6 +676,12 @@ paths:
       operationId: updateStatusFollowUser
       security:
         - AccessToken: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
       requestBody:
         content:
           application/json:
@@ -865,6 +886,37 @@ components:
           type: string
         status:
           type: string
+    # End StoreDeviceToken Schema
+    # StoreDeviceToken Schema
+    CreateCreationV2:
+      type: object
+      properties:
+        title:
+          type: string
+        seen:
+          type: string
+        locationType:
+          type: string
+        distance:
+          type: string
+        location:
+          type: object
+        locationSelected:
+          type: string
+        visibilityRange:
+          type: string
+        dateTime:
+          type: string
+        textAddress:
+          type: string
+        comments:
+          type: integer
+        views:
+          type: integer
+        likes:
+          type: string
+        content:
+          type: object
     # End StoreDeviceToken Schema
     # DeleteUser Schema
     DeleteUser:
