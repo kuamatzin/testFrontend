@@ -54,13 +54,13 @@ paths:
         required: true
       responses:
         '200':
-          description: User signed in
+          description: User Signed In
         '400':
           description: Error body
           content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SignupResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignupResponse'
       x-codegen-request-body-name: body
   '/auth/login':
     post:
