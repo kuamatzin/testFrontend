@@ -13,7 +13,7 @@ externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
 servers:
-  - url: 'https://us-central1-arq-dev.cloudfunctions.net'
+  - url: 'https://us-central1-wrabbitignys.cloudfunctions.net'
   - url: 'http://localhost:5000/wrabbitignys/us-central1'
 
 tags:
