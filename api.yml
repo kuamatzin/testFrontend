@@ -54,7 +54,7 @@ paths:
         required: true
       responses:
         '200':
-          description: User Signed In
+          description: User signed in
         '400':
           description: Error body
           content:
@@ -78,11 +78,14 @@ paths:
               $ref: '#/components/schemas/Login'
         required: true
       responses:
-        '405':
-          description: Invalid input
-        '201':
+        '200':
           description: Success login
-      x-codegen-request-body-name: body
+        '400':
+          description: Error body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
   '/auth/refresh/token':
     post:
       tags:
@@ -98,10 +101,14 @@ paths:
               $ref: '#/components/schemas/RefreshToken'
         required: true
       responses:
-        '405':
-          description: Invalid input
-        '201':
-          description: Success refresh token
+        '200':
+          description: Success login
+        '400':
+          description: Error body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshTokenResponse'
       x-codegen-request-body-name: body
   '/auth/forgot/password':
     post:
@@ -118,10 +125,14 @@ paths:
               $ref: '#/components/schemas/ForgotPassword'
         required: true
       responses:
-        '405':
-          description: Invalid input
-        '201':
-          description: Success sent code
+        '200':
+          description: Success login
+        '400':
+          description: Error body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForgotPasswordResponse'
       x-codegen-request-body-name: body
   '/auth/forgot/password/confirm':
     post:
@@ -138,10 +149,14 @@ paths:
               $ref: '#/components/schemas/ForgotPasswordConfirm'
         required: true
       responses:
-        '405':
-          description: Invalid input
-        '201':
+        '200':
           description: Success forgot password confirm
+        '400':
+          description: Error body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForgotPasswordConfirmResponse'
       x-codegen-request-body-name: body
   '/auth/change/password/':
     post:
@@ -160,10 +175,14 @@ paths:
               $ref: '#/components/schemas/ChangePassword'
         required: true
       responses:
-        '405':
-          description: Invalid input
-        '201':
+        '200':
           description: Success change password
+        '400':
+          description: Error body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangePasswordResponse'
       x-codegen-request-body-name: body
   '/auth/resend/confirm/code/':
     post:
@@ -180,10 +199,14 @@ paths:
               $ref: '#/components/schemas/resendConfirmCode'
         required: true
       responses:
-        '405':
-          description: Invalid input
-        '201':
+        '200':
           description: Success resend code
+        '400':
+          description: Error body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfirmCodeResponse'
       x-codegen-request-body-name: body
   # CREATION
   '/creation':
@@ -932,6 +955,101 @@ components:
         password:
           type: string
     # End DeleteUser Schema
+    LoginResponse:
+      type: array
+      example:
+        [
+          {
+            "code": 0,
+            "status": "ERROR_INPUT",
+            "description": "Bad validation body request"
+          },
+          {
+            "code": 1,
+            "status": "ERROR_LOGIN",
+            "description": "Bad credentials"
+          }
+        ]
+    RefreshTokenResponse:
+      type: array
+      example:
+        [
+          {
+            "code": 0,
+            "status": "ERROR_INPUT",
+            "description": "Bad validation body request"
+          },
+          {
+            "code": 1,
+            "status": "ERROR_REFRESH_TOKEN",
+            "description": "Error refreshing token"
+          }
+        ]
+    ForgotPasswordResponse:
+      type: array
+      example:
+        [
+          {
+            "code": 0,
+            "status": "ERROR_INPUT",
+            "description": "Bad validation body request"
+          },
+          {
+            "code": 1,
+            "status": "ERROR_REFRESH_TOKEN",
+            "description": "Error refreshing token"
+          }
+        ]
+    ForgotPasswordConfirmResponse:
+      type: array
+      example:
+        [
+          {
+            "code": 0,
+            "status": "ERROR_INPUT",
+            "description": "Bad validation body request"
+          },
+          {
+            "code": 1,
+            "status": "ERROR_FORGOT_PASSWORD_CONFIRM",
+            "description": "Error forgot password confirm"
+          }
+        ]
+    ConfirmCodeResponse:
+      type: array
+      example:
+        [
+          {
+            "code": 0,
+            "status": "ERROR_INPUT",
+            "description": "Bad validation body request"
+          },
+          {
+            "code": 1,
+            "status": "ERROR_RESEND_CODE",
+            "description": "Error resend code"
+          }
+        ]
+    ChangePasswordResponse:
+      type: array
+      example:
+        [
+          {
+            "code": 0,
+            "status": "ERROR_INPUT",
+            "description": "Bad validation body request"
+          },
+          {
+            "code": 1,
+            "status": "ERROR_FAIL_CHANGE_PASSWORD",
+            "description": "Error, fail change password"
+          },
+          {
+            "code": 2,
+            "status": "ERROR_CHANGE_PASSWORD",
+            "description": "Error change password"
+          }
+        ]
     SignupResponse:
       type: array
       example:
@@ -943,18 +1061,8 @@ components:
           },
           {
             "code": 1,
-            "status": "ERROR_SIGNUP_USER",
-            "description": "Email already exists in DB"
-          },
-          {
-            "code": 2,
-            "status": "USER_NOT_CREATED_IN_DYNAMO",
-            "description": "User could not be saved"
-          },
-          {
-            "code": 3,
-            "status": "UNABLE_TO_LOGIN",
-            "description": "User created but unable to login"
+            "status": "ERROR_FORGOT_PASSWORD",
+            "description": "Error forgot password"
           }
         ]
   securitySchemes:
