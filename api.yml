@@ -463,6 +463,75 @@ paths:
           description: Error upload photo into bucket S3
         '200':
           description: Success upload photo
+  # LIKE
+  '/like/{creationId}':
+    get:
+      tags:
+        - Likes
+      summary: Get likes of creation
+      description: Get likes of creation
+      operationId: getLikeCreation
+      security:
+        - AccessToken: []
+      parameters:
+        - in: path
+          name: creationId
+          schema:
+            type: string
+          required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+    post:
+      tags:
+        - Likes
+      summary: Like to creation
+      description: Like to creation
+      operationId: createLikeCreation
+      security:
+        - AccessToken: []
+      parameters:
+        - in: path
+          name: creationId
+          schema:
+            type: string
+          required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+  '/like/{id}/dismiss/{creationId}':
+    delete:
+      tags:
+        - Likes
+      summary: Delete like to creation
+      description: Delete like to creation
+      operationId: deleteLikeCreation
+      security:
+        - AccessToken: []
+      parameters:
+        - in: path
+          name: creationId
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+            description: id of like
+          required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
   # DEVICE
   '/device/token':
     post:
