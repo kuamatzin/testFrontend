@@ -883,6 +883,48 @@ paths:
         '200':
           description: Success
       x-codegen-request-body-name: body
+  # VIEWS
+  '/views/{creationId}':
+    get:
+      tags:
+        - Views
+      summary: Get views of creation
+      description: Get views of creation
+      operationId: getViewsCreation
+      security:
+        - AccessToken: []
+      parameters:
+        - in: path
+          name: creationId
+          schema:
+            type: string
+          required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+    post:
+      tags:
+        - Views
+      summary: View to creation
+      description: View to creation
+      operationId: createViewCreation
+      security:
+        - AccessToken: []
+      parameters:
+        - in: path
+          name: creationId
+          schema:
+            type: string
+          required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
 components:
   schemas:
     # Signup Schema
