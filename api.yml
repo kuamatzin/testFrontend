@@ -244,68 +244,6 @@ paths:
         '200':
           description: Success show creations
       x-codegen-request-body-name: body
-  '/creation/upload/video':
-    post:
-      servers:
-        - url: https://cryptic-eyrie-32793.herokuapp.com
-      tags:
-        - Creation
-      summary: Upload video preview
-      description: Upload video preview to S3
-      operationId: creationUploadVideo
-      security:
-        - AccessToken: []
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CreationUploadVideo'
-      responses:
-        '405':
-          description: Invalid input
-        '400':
-          description: Error upload video into bucket S3
-        '200':
-          description: Success show creations
-      x-codegen-request-body-name: body
-  '/creation/{creationId}/upload/file/content/{messageId}':
-    post:
-      servers:
-        - url: https://cryptic-eyrie-32793.herokuapp.com
-      tags:
-        - Creation
-      summary: Upload file content
-      description: Upload file content to S3
-      operationId: creationUploadFileContent
-      security:
-        - AccessToken: []
-      parameters:
-        - in: path
-          name: creationId
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: messageId
-          schema:
-            type: string
-          required: true
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-      responses:
-        '405':
-          description: Invalid input
-        '400':
-          description: Error upload file content into bucket S3
-        '200':
-          description: Success upload file content creation
   ### CREATION V2 ######################
   '/creation/v2/':
     get:
@@ -350,72 +288,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreationStoreResponse'
       x-codegen-request-body-name: body
-  '/creation/v2/upload/video':
-    post:
-      servers:
-        - url: https://cryptic-eyrie-32793.herokuapp.com
-      tags:
-        - Creation
-      summary: Upload video preview
-      description: Upload video preview to S3
-      operationId: creationUploadVideoV2
-      security:
-        - AccessToken: []
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CreationUploadVideo'
-      responses:
-        '200':
-          description: User signed in
-        '400':
-          description: Error body
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreationUploadVideoResponse'
-      x-codegen-request-body-name: body
-  '/creation/v2/{creationId}/upload/file/content/{messageId}':
-    post:
-      servers:
-        - url: https://cryptic-eyrie-32793.herokuapp.com
-      tags:
-        - Creation
-      summary: Upload file content
-      description: Upload file content to S3
-      operationId: creationUploadFileContentV2
-      security:
-        - AccessToken: []
-      parameters:
-        - in: path
-          name: creationId
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: messageId
-          schema:
-            type: string
-          required: true
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-      responses:
-        '200':
-          description: User signed in
-        '400':
-          description: Error body
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreationUploadContentFileResponse'
   # PROFILE
   '/profile/user':
     get:
@@ -452,29 +324,6 @@ paths:
         '200':
           description: Success show profile
       x-codegen-request-body-name: body
-  '/profile/upload/photo':
-    post:
-      servers:
-        - url: https://cryptic-eyrie-32793.herokuapp.com
-      tags:
-        - Profile
-      summary: Upload photo profile
-      description: Upload photo profile to S3
-      operationId: profileUploadPhoto
-      security:
-        - AccessToken: []
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ProfileUploadPhoto'
-      responses:
-        '405':
-          description: Invalid input
-        '400':
-          description: Error upload photo into bucket S3
-        '200':
-          description: Success upload photo
   # LIKE
   '/like/{creationId}':
     get:
@@ -732,16 +581,34 @@ paths:
     delete:
       tags:
         - User
-      summary: Delete user
-      description: Delete user
-      operationId: deleteUser
+      summary: Disabled user
+      description: Disable user
+      operationId: disabledUser
+      security:
+        - AccessToken: []
+      responses:
+        '405':
+          description: Invalid input
+        '201':
+          description: Success delete user
+      x-codegen-request-body-name: body
+  '/user/enable':
+    post:
+      tags:
+        - User
+      summary: Enable user
+      description: Enable user
+      operationId: enabledUser
       security:
         - AccessToken: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeleteUser'
+              type: object
+              properties:
+                email:
+                  type: string
         required: true
       responses:
         '405':
@@ -925,6 +792,158 @@ paths:
         '200':
           description: Success
       x-codegen-request-body-name: body
+  # Uploads
+  '/upload/creation/v2/video':
+    post:
+      servers:
+        - url: https://cryptic-eyrie-32793.herokuapp.com
+      tags:
+        - Uploads
+      summary: Upload video preview
+      description: Upload video preview to S3
+      operationId: creationUploadVideoV2
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreationUploadVideo'
+      responses:
+        '200':
+          description: User signed in
+        '400':
+          description: Error body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreationUploadVideoResponse'
+      x-codegen-request-body-name: body
+  '/upload/creation/video':
+    post:
+      servers:
+        - url: https://cryptic-eyrie-32793.herokuapp.com
+      tags:
+        - Uploads
+      summary: Upload video preview
+      description: Upload video preview to S3
+      operationId: creationUploadVideo
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreationUploadVideo'
+      responses:
+        '405':
+          description: Invalid input
+        '400':
+          description: Error upload video into bucket S3
+        '200':
+          description: Success show creations
+      x-codegen-request-body-name: body
+  '/upload/creation/{creationId}/file/content/{messageId}':
+    post:
+      servers:
+        - url: https://cryptic-eyrie-32793.herokuapp.com
+      tags:
+        - Uploads
+      summary: Upload file content
+      description: Upload file content to S3
+      operationId: creationUploadFileContent
+      security:
+        - AccessToken: []
+      parameters:
+        - in: path
+          name: creationId
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: messageId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '405':
+          description: Invalid input
+        '400':
+          description: Error upload file content into bucket S3
+        '200':
+          description: Success upload file content creation
+  '/upload/creation/v2/{creationId}/upload/file/content/{messageId}':
+    post:
+      servers:
+        - url: https://cryptic-eyrie-32793.herokuapp.com
+      tags:
+        - Uploads
+      summary: Upload file content
+      description: Upload file content to S3
+      operationId: creationUploadFileContentV2
+      security:
+        - AccessToken: []
+      parameters:
+        - in: path
+          name: creationId
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: messageId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: User signed in
+        '400':
+          description: Error body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreationUploadContentFileResponse'
+  '/upload/profile/photo':
+    post:
+      servers:
+        - url: https://cryptic-eyrie-32793.herokuapp.com
+      tags:
+        - Uploads
+      summary: Upload photo profile
+      description: Upload photo profile to S3
+      operationId: profileUploadPhoto
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProfileUploadPhoto'
+      responses:
+        '405':
+          description: Invalid input
+        '400':
+          description: Error upload photo into bucket S3
+        '200':
+          description: Success upload photo
 components:
   schemas:
     # Signup Schema
@@ -1158,176 +1177,176 @@ components:
       type: array
       example:
         [
-          {
-            "code": 0,
-            "status": "ERROR_INPUT",
-            "description": "Bad validation body request"
-          },
-          {
-            "code": 1,
-            "status": "ERROR_LOGIN",
-            "description": "Bad credentials"
-          }
+        {
+          "code": 0,
+          "status": "ERROR_INPUT",
+          "description": "Bad validation body request"
+        },
+        {
+          "code": 1,
+          "status": "ERROR_LOGIN",
+          "description": "Bad credentials"
+        }
         ]
     RefreshTokenResponse:
       type: array
       example:
         [
-          {
-            "code": 0,
-            "status": "ERROR_INPUT",
-            "description": "Bad validation body request"
-          },
-          {
-            "code": 1,
-            "status": "ERROR_REFRESH_TOKEN",
-            "description": "Error refreshing token"
-          }
+        {
+          "code": 0,
+          "status": "ERROR_INPUT",
+          "description": "Bad validation body request"
+        },
+        {
+          "code": 1,
+          "status": "ERROR_REFRESH_TOKEN",
+          "description": "Error refreshing token"
+        }
         ]
     ForgotPasswordResponse:
       type: array
       example:
         [
-          {
-            "code": 0,
-            "status": "ERROR_INPUT",
-            "description": "Bad validation body request"
-          },
-          {
-            "code": 1,
-            "status": "ERROR_REFRESH_TOKEN",
-            "description": "Error refreshing token"
-          }
+        {
+          "code": 0,
+          "status": "ERROR_INPUT",
+          "description": "Bad validation body request"
+        },
+        {
+          "code": 1,
+          "status": "ERROR_REFRESH_TOKEN",
+          "description": "Error refreshing token"
+        }
         ]
     ForgotPasswordConfirmResponse:
       type: array
       example:
         [
-          {
-            "code": 0,
-            "status": "ERROR_INPUT",
-            "description": "Bad validation body request"
-          },
-          {
-            "code": 1,
-            "status": "ERROR_FORGOT_PASSWORD_CONFIRM",
-            "description": "Error forgot password confirm"
-          }
+        {
+          "code": 0,
+          "status": "ERROR_INPUT",
+          "description": "Bad validation body request"
+        },
+        {
+          "code": 1,
+          "status": "ERROR_FORGOT_PASSWORD_CONFIRM",
+          "description": "Error forgot password confirm"
+        }
         ]
     ConfirmCodeResponse:
       type: array
       example:
         [
-          {
-            "code": 0,
-            "status": "ERROR_INPUT",
-            "description": "Bad validation body request"
-          },
-          {
-            "code": 1,
-            "status": "ERROR_RESEND_CODE",
-            "description": "Error resend code"
-          }
+        {
+          "code": 0,
+          "status": "ERROR_INPUT",
+          "description": "Bad validation body request"
+        },
+        {
+          "code": 1,
+          "status": "ERROR_RESEND_CODE",
+          "description": "Error resend code"
+        }
         ]
     ChangePasswordResponse:
       type: array
       example:
         [
-          {
-            "code": 0,
-            "status": "ERROR_INPUT",
-            "description": "Bad validation body request"
-          },
-          {
-            "code": 1,
-            "status": "ERROR_FAIL_CHANGE_PASSWORD",
-            "description": "Error, fail change password"
-          },
-          {
-            "code": 2,
-            "status": "ERROR_CHANGE_PASSWORD",
-            "description": "Error change password"
-          }
+        {
+          "code": 0,
+          "status": "ERROR_INPUT",
+          "description": "Bad validation body request"
+        },
+        {
+          "code": 1,
+          "status": "ERROR_FAIL_CHANGE_PASSWORD",
+          "description": "Error, fail change password"
+        },
+        {
+          "code": 2,
+          "status": "ERROR_CHANGE_PASSWORD",
+          "description": "Error change password"
+        }
         ]
     SignupResponse:
       type: array
       example:
         [
-          {
-            "code": 0,
-            "status": "ERROR_INPUT",
-            "description": "Bad validation body request"
-          },
-          {
-            "code": 1,
-            "status": "ERROR_FORGOT_PASSWORD",
-            "description": "Error forgot password"
-          }
+        {
+          "code": 0,
+          "status": "ERROR_INPUT",
+          "description": "Bad validation body request"
+        },
+        {
+          "code": 1,
+          "status": "ERROR_FORGOT_PASSWORD",
+          "description": "Error forgot password"
+        }
         ]
     CreationStoreResponse:
       type: array
       example:
         [
-          {
-            "code": 0,
-            "status": "ERROR_INPUT",
-            "description": "Bad validation body request"
-          },
-          {
-            "code": 1,
-            "status": "ERROR_CREATE_CREATION",
-            "description": "Error creating the creation"
-          }
+        {
+          "code": 0,
+          "status": "ERROR_INPUT",
+          "description": "Bad validation body request"
+        },
+        {
+          "code": 1,
+          "status": "ERROR_CREATE_CREATION",
+          "description": "Error creating the creation"
+        }
         ]
     CreationGetResponse:
       type: array
       example:
         [
-          {
-            "code": 1,
-            "status": "ERROR_LIST_CREATIONS",
-            "description": "Error getting the creations"
-          }
+        {
+          "code": 1,
+          "status": "ERROR_LIST_CREATIONS",
+          "description": "Error getting the creations"
+        }
         ]
     CreationUploadVideoResponse:
       type: array
       example:
         [
-          {
-            "code": 0,
-            "status": "ERROR_INPUT",
-            "description": "Bad validation body request"
-          },
-          {
-            "code": 1,
-            "status": "ERROR_UPDATE_CREATION",
-            "description": "Error updating the creation"
-          }
+        {
+          "code": 0,
+          "status": "ERROR_INPUT",
+          "description": "Bad validation body request"
+        },
+        {
+          "code": 1,
+          "status": "ERROR_UPDATE_CREATION",
+          "description": "Error updating the creation"
+        }
         ]
     CreationUploadContentFileResponse:
       type: array
       example:
         [
-          {
-            "code": 0,
-            "status": "ERROR_INPUT",
-            "description": "Bad validation body request"
-          },
-          {
-            "code": 1,
-            "status": "ERROR_GETTING_CREATION",
-            "description": "Error getting the creation"
-          },
-          {
-            "code": 2,
-            "status": "ERROR_PARSING_CREATION",
-            "description": "Error parsing the creation"
-          },
-          {
-            "code": 3,
-            "status": "ERROR_UPDATE_CREATION",
-            "description": "Error updating the creation"
-          }
+        {
+          "code": 0,
+          "status": "ERROR_INPUT",
+          "description": "Bad validation body request"
+        },
+        {
+          "code": 1,
+          "status": "ERROR_GETTING_CREATION",
+          "description": "Error getting the creation"
+        },
+        {
+          "code": 2,
+          "status": "ERROR_PARSING_CREATION",
+          "description": "Error parsing the creation"
+        },
+        {
+          "code": 3,
+          "status": "ERROR_UPDATE_CREATION",
+          "description": "Error updating the creation"
+        }
         ]
   securitySchemes:
     AccessToken:
