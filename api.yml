@@ -218,6 +218,7 @@ paths:
       operationId: creation
       security:
         - AccessToken: []
+      deprecated: true
       responses:
         '405':
           description: Invalid input
@@ -230,6 +231,7 @@ paths:
       summary: Create creations
       description: Creatation creations
       operationId: creationStore
+      deprecated: true
       security:
         - AccessToken: []
       requestBody:
@@ -828,6 +830,7 @@ paths:
       summary: Upload video preview
       description: Upload video preview to S3
       operationId: creationUploadVideo
+      deprecated: true
       security:
         - AccessToken: []
       requestBody:
@@ -854,6 +857,7 @@ paths:
       operationId: creationUploadFileContent
       security:
         - AccessToken: []
+      deprecated: true
       parameters:
         - in: path
           name: creationId
@@ -881,7 +885,7 @@ paths:
           description: Error upload file content into bucket S3
         '200':
           description: Success upload file content creation
-  '/upload/creation/v2/{creationId}/upload/file/content/{messageId}':
+  '/upload/creation/v2/{creationId}/file/content/{contentId}':
     post:
       servers:
         - url: https://cryptic-eyrie-32793.herokuapp.com
@@ -899,7 +903,7 @@ paths:
             type: string
           required: true
         - in: path
-          name: messageId
+          name: contentId
           schema:
             type: string
           required: true
@@ -1139,8 +1143,6 @@ components:
       properties:
         title:
           type: string
-        seen:
-          type: string
         locationType:
           type: string
         distance:
@@ -1155,24 +1157,36 @@ components:
           type: string
         textAddress:
           type: string
-        comments:
-          type: integer
-        views:
-          type: integer
-        likes:
-          type: string
         content:
-          type: object
+          type: array
+          items:
+            type: object
+            properties:
+              shift:
+                type: object
+              color:
+                type: object
+              messageTypeId: 
+                type: string
+              messageType:
+                type: string
+              spatialLocation:
+                type: object
+              spatialLocationRelative:
+                type: object
+              spatialOrientation:
+                type: object
+              text:
+                type: string
+              textFont:
+                type: string
+              distenceShift:
+                type: integer
+              frame:
+                type: object
+              fileUrl:
+                type: string
     # End StoreDeviceToken Schema
-    # DeleteUser Schema
-    DeleteUser:
-      type: object
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-    # End DeleteUser Schema
     LoginResponse:
       type: array
       example:
