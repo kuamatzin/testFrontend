@@ -1166,7 +1166,7 @@ components:
                 type: object
               color:
                 type: object
-              messageTypeId: 
+              contentId: 
                 type: string
               messageType:
                 type: string
