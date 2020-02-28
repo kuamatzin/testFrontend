@@ -258,7 +258,7 @@ paths:
         - AccessToken: []
       responses:
         '200':
-          description: User signed in
+          description: Get creations
         '400':
           description: Error body
           content:
@@ -1151,7 +1151,7 @@ components:
           type: object
         locationSelected:
           type: string
-        visibilityRange:
+        privacyType:
           type: string
         dateTime:
           type: string
