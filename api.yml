@@ -290,6 +290,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreationStoreResponse'
       x-codegen-request-body-name: body
+  '/creation/followers':
+    get:
+      tags:
+        - Creation
+      summary: Show all creations by followers
+      description: Show all creations by followers
+      operationId: creationFollowers
+      security:
+        - AccessToken: []
+      parameters:
+        - in: query
+          name: lastEvaluatedKeyFollow
+          schema:
+            type: string
+        - in: query
+          name: lastEvaluatedKeyCreation
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User signed in
+        '400':
+          description: Error body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreationStoreResponse'
+      x-codegen-request-body-name: body
   # PROFILE
   '/profile/user':
     get:
@@ -711,7 +739,7 @@ paths:
             schema:
               type: object
               properties:
-                followId:
+                sub:
                   type: string
                   description: Sub id
         required: true
@@ -948,6 +976,79 @@ paths:
           description: Error upload photo into bucket S3
         '200':
           description: Success upload photo
+  '/notifications':
+    get:
+      tags:
+        - Notifications
+      summary: Get notifications by sub
+      description: Get notifications by sub
+      operationId: getNotificationsList
+      security:
+        - AccessToken: []
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+  '/geolocation':
+    post:
+      tags:
+        - Geolocation
+      summary: Create geolocation
+      description: Create geolocation
+      operationId: creationCreationsGeolocation
+      security:
+        - AccessToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                longitude:
+                  type: string
+                latitude:
+                  type: string
+                creationId:
+                  type: string
+                country:
+                  type: string
+                capital:
+                  type: string
+        required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
+  '/geolocation/creations':
+    get:
+      tags:
+        - Geolocation
+      summary: Get creations by location
+      description: Get creations by location
+      operationId: getCreationsGeolocation
+      security:
+        - AccessToken: []
+      parameters:
+        - in: query
+          name: latitude
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: longitude
+          schema:
+            type: string
+          required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success
+      x-codegen-request-body-name: body
 components:
   schemas:
     # Signup Schema
@@ -1166,7 +1267,7 @@ components:
                 type: object
               color:
                 type: object
-              contentId: 
+              contentId:
                 type: string
               messageType:
                 type: string
