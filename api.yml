@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Spyc AR API
-  description: Monadic ARQ project documentation
+  description: Spyc ARQ project documentation
   termsOfService: 'http://swagger.io/terms/'
   contact:
     email: apiteam@monadic.com
@@ -240,6 +240,21 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateCreation'
         required: true
+      responses:
+        '405':
+          description: Invalid input
+        '200':
+          description: Success show creations
+      x-codegen-request-body-name: body
+  '/creation/sub':
+    get:
+      tags:
+        - Creation
+      summary: Show all creations by sub
+      description: Show all creations by sub
+      operationId: creationsSub
+      security:
+        - AccessToken: []
       responses:
         '405':
           description: Invalid input
@@ -1146,7 +1161,7 @@ components:
           "LOCATION_SELECTED": "MY_LOCATION",
           "VISIBILITY_RANGE": "1000",
           "DATE_TIME": "21 Jan 2020 at 16:43:40",
-          "TEXT_ADDRESS": "14–20 Aston Quay Temple Bar District Dublin Co. Dublin Dublin 2",
+          "TEXT_ADDRESS": "14â€“20 Aston Quay Temple Bar District Dublin Co. Dublin Dublin 2",
           "VIDEO_PREVIEW": {
             "MIMETYPE": "video/mp4",
             "LOCATION": "https://test-video-preview.s3.amazonaws.com/c042d552-298e-49c4-9946-d724e0183231.mp4",
