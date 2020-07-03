@@ -901,8 +901,8 @@ paths:
         - url: https://cryptic-eyrie-32793.herokuapp.com
       tags:
         - Uploads
-      summary: Upload video preview
-      description: Upload video preview to S3
+      summary: Upload preview
+      description: Upload preview to S3
       operationId: creationUploadVideoV2
       security:
         - AccessToken: []
@@ -927,8 +927,8 @@ paths:
         - url: https://cryptic-eyrie-32793.herokuapp.com
       tags:
         - Uploads
-      summary: Upload video preview
-      description: Upload video preview to S3
+      summary: Upload video
+      description: Upload video to S3
       operationId: creationUploadVideo
       deprecated: true
       security:
