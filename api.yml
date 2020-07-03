@@ -1192,7 +1192,7 @@ components:
       properties:
         creationId:
           type: string
-        video:
+        preview:
           type: string
           format: binary
     # End CreationUploadVideo Schema
