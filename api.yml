@@ -898,7 +898,7 @@ paths:
   '/upload/creation/v2/preview':
     post:
       servers:
-        - url: https://cryptic-eyrie-32793.herokuapp.com
+        - url: https://spyar.herokuapp.com
       tags:
         - Uploads
       summary: Upload preview
@@ -924,7 +924,7 @@ paths:
   '/upload/creation/video':
     post:
       servers:
-        - url: https://cryptic-eyrie-32793.herokuapp.com
+        - url: https://spyar.herokuapp.com
       tags:
         - Uploads
       summary: Upload video
@@ -949,7 +949,7 @@ paths:
   '/upload/creation/{creationId}/file/content/{messageId}':
     post:
       servers:
-        - url: https://cryptic-eyrie-32793.herokuapp.com
+        - url: https://spyar.herokuapp.com
       tags:
         - Uploads
       summary: Upload file content
@@ -988,7 +988,7 @@ paths:
   '/upload/creation/v2/{creationId}/file/content/{contentId}':
     post:
       servers:
-        - url: https://cryptic-eyrie-32793.herokuapp.com
+        - url: https://spyar.herokuapp.com
       tags:
         - Uploads
       summary: Upload file content
@@ -1028,7 +1028,7 @@ paths:
   '/upload/profile/photo':
     post:
       servers:
-        - url: https://cryptic-eyrie-32793.herokuapp.com
+        - url: https://spyar.herokuapp.com
       tags:
         - Uploads
       summary: Upload photo profile
